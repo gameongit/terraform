@@ -23,7 +23,6 @@ resource "aws_security_group" "webservers" {
     to_port     = 80
     protocol    = "tcp"
     security_groups = ["${var.elb-sg-id}"]
-#    cidr_blocks = [var.vpc_cidr]
   }
 
   egress {
@@ -48,7 +47,6 @@ resource "aws_launch_configuration" "example" {
   image_id               = var.image_id
   instance_type          = var.instance_type
   security_groups = [aws_security_group.webservers.id]
-#  security_groups        = data.aws_security_groups.test.ids
   key_name               = var.key
   user_data              = filebase64("config/userdata.sh")
   lifecycle {

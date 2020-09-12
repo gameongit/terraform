@@ -67,8 +67,6 @@ resource "aws_s3_bucket_policy" "s3-test" {
 }
 POLICY
 }
-#"arn:aws:iam::275387897436:user/devops",
-#"arn:aws:iam::275387897436:root",
 
 data "aws_availability_zones" "available" {
   state = "available"
@@ -133,12 +131,6 @@ resource "aws_elb" "elb-test" {
     Environment = "test"
   }
 }
-
-#resource "aws_elb_attachment" "baz" {
-#  count = var.ec2_count
-#  elb      = aws_elb.elb-test.id
-#  instance = aws_instance.web[count.index].id
-#}
 
 output "elb_id" {
   value = aws_elb.elb-test.id
