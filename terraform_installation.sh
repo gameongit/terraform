@@ -1,5 +1,5 @@
 #!/bin/bash
-terraform_home="/usr/bin"
+terraform_home="/usr/local/bin"
 terraform_file="terraform_0.12.23_linux_amd64.zip"
 terragrunt_file="terragrunt_linux_amd64"
 function terraform_install() {
@@ -24,19 +24,19 @@ function terragrunt_install() {
   echo "Installed: `${terraform_home}/terragrunt --version`"
 }
 
-function kubectl_install() {
-  [[ -f ${terraform_home}/kubectl ]] && echo "`${terraform_home}/kubectl version --client --short` already installed at ${terraform_home}/kubectl" && return 0
-  LATEST_URL="https://storage.googleapis.com/kubernetes-release/release/v1.18.0/bin/linux/amd64/kubectl"
-  cd /tmp/; wget ${LATEST_URL} --no-check-certificate
-  sudo mv /tmp/kubectl ${terraform_home}/kubectl
-  chmod +x ${terraform_home}/kubectl
+#function kubectl_install() {
+#  [[ -f ${terraform_home}/kubectl ]] && echo "`${terraform_home}/kubectl version --client --short` already installed at ${terraform_home}/kubectl" && return 0
+#  LATEST_URL="https://storage.googleapis.com/kubernetes-release/release/v1.18.0/bin/linux/amd64/kubectl"
+#  cd /tmp/; wget ${LATEST_URL} --no-check-certificate
+#  sudo mv /tmp/kubectl ${terraform_home}/kubectl
+#  chmod +x ${terraform_home}/kubectl
   
 
-  echo "Installed: `${terraform_home}/kubectl --version`"
-}
+#  echo "Installed: `${terraform_home}/kubectl --version`"
+#}
 
 terraform_install
 
 terragrunt_install
 
-kubectl_install
+#kubectl_install
