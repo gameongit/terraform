@@ -1,0 +1,60 @@
+pipeline{
+    agent any
+    stages{
+        stage('download_modules'){
+             steps {
+                dir ('modules') {
+                    checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: '*/master']],
+                        doGenerateSubmoduleConfigurations: false,
+                        extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'terraform']],
+                        submoduleCfg: [],
+                        userRemoteConfigs: [[
+                            credentialsId: '',
+                            url: 'https://github.com/gameongit/terraform'
+                        ]]
+                    ])
+                }
+            }
+        }
+        stage('install_packages'){
+             steps {
+                 dir ('modules/terraform') {
+                    sh "chmod +x terraform_installation.sh"
+                    sh "./terraform_installation.sh"
+                 }
+
+             }
+         }
+        stage('terraform_plan'){
+            steps {
+                dir ('modules/terraform/create_ec2_LB_autoscaling') {
+                    ansiColor('xterm') {
+                        sh "terraform init"
+                        sh "terraform plan -out=myplan"
+                    }
+                }
+
+            }
+        }
+        stage('terraform_Approval'){
+            steps {
+                script {
+                    def userInput = input(id: 'confirm', message: 'Apply terragrunt?', parameters: [ [$class: 'BooleanParameterDefinition', def
+aultValue: false, description: 'Apply terragrunt', name: 'confirm'] ])
+                }
+
+            }
+        }
+        stage('terraform_apply'){
+            steps{
+                dir ('modules/terraform/create_ec2_LB_autoscaling'){
+                ansiColor('xterm'){
+                    sh 'terraform apply "myplan" -auto-approve'
+                }
+            }
+          }
+        }
+    }
+}
