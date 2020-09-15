@@ -50,7 +50,7 @@ pipeline{
             steps{
                 dir ('modules/terraform/create_ec2_LB_autoscaling'){
                 ansiColor('xterm'){
-                    sh "terraform apply myplan -auto-approve"
+                    sh "echo 'yes'| terraform apply myplan"
                 }
             }
           }
