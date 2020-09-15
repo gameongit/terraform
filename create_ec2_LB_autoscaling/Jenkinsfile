@@ -41,8 +41,7 @@ pipeline{
         stage('terraform_Approval'){
             steps {
                 script {
-                    def userInput = input(id: 'confirm', message: 'Apply terragrunt?', parameters: [ [$class: 'BooleanParameterDefinition', def
-aultValue: false, description: 'Apply terragrunt', name: 'confirm'] ])
+                    def userInput = input(id: 'confirm', message: 'Apply terragrunt?', parameters: [ [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Apply terragrunt', name: 'confirm'] ])
                 }
 
             }
