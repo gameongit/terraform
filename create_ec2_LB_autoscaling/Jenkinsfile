@@ -3,7 +3,7 @@ pipeline{
     stages{
         stage('download_modules'){
              steps {
-                dir (){
+                dir (''){
                     checkout([
                         $class: 'GitSCM',
                         branches: [[name: '*/master']],
@@ -19,7 +19,7 @@ pipeline{
         }
         stage('install_packages'){
              steps {
-                 dir (){
+                 dir (''){
                     sh "chmod +x terraform_installation.sh"
                     sh "./terraform_installation.sh"
                  }
