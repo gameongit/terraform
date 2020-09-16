@@ -8,7 +8,6 @@ pipeline{
                         $class: 'GitSCM',
                         branches: [[name: '*/master']],
                         doGenerateSubmoduleConfigurations: false,
-#                        extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'terraform']],
                         submoduleCfg: [],
                         userRemoteConfigs: [[
                             credentialsId: '',
