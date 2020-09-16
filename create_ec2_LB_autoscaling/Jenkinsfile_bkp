@@ -3,7 +3,7 @@ pipeline{
     stages{
         stage('download_modules'){
              steps {
-                {
+                dir ('modules') {
                     checkout([
                         $class: 'GitSCM',
                         branches: [[name: '*/master']],
@@ -20,7 +20,7 @@ pipeline{
         }
         stage('install_packages'){
              steps {
-                 {
+                 dir ('modules/terraform') {
                     sh "chmod +x terraform_installation.sh"
                     sh "./terraform_installation.sh"
                  }
@@ -29,7 +29,7 @@ pipeline{
          }
         stage('terraform_plan'){
             steps {
-                dir ('create_ec2_LB_autoscaling') {
+                dir ('modules/terraform/create_ec2_LB_autoscaling') {
                     ansiColor('xterm') {
                         sh "terraform init"
                         sh "terraform plan -out=myplan"
@@ -48,7 +48,7 @@ pipeline{
         }
         stage('terraform_apply'){
             steps{
-                dir ('create_ec2_LB_autoscaling'){
+                dir ('modules/terraform/create_ec2_LB_autoscaling'){
                 ansiColor('xterm'){
                     sh "echo 'yes'| terraform apply myplan"
                 }
